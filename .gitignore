@@ -26,3 +26,11 @@ replay_pid*
 
 # ignore the gradle
 .gradle/
+
+# ignore build and output
+/build/
+/out/
+
+
+# ignore idea files
+.idea/*
