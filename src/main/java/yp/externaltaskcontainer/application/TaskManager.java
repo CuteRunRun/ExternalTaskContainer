@@ -1,6 +1,7 @@
 package yp.externaltaskcontainer.application;
 
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import yp.externaltaskcontainer.application.exception.CommandExecutionException;
@@ -17,15 +18,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class TaskManager {
     @Value("${task.number}")
     private int maxThreadsNum;
-    private final ThreadPoolExecutor executor = new ThreadPoolExecutor(
-            5,                      // Core pool size (number of threads)
-            5,                      // Maximum pool size
-            0L, TimeUnit.MILLISECONDS, // Keep-alive time (not relevant for a fixed pool)
-            new SynchronousQueue<>(), // No queue: tasks will be rejected if no threads are available
-            new ThreadPoolExecutor.AbortPolicy() // Rejection policy: throw exception
-    );
-
-    public TaskManager() {
+    private ThreadPoolExecutor executor;
+    @PostConstruct
+    public void init() {
+        executor = new ThreadPoolExecutor(
+                maxThreadsNum,                      // Core pool size (number of threads)
+                maxThreadsNum,                      // Maximum pool size
+                0L, TimeUnit.MILLISECONDS, // Keep-alive time (not relevant for a fixed pool)
+                new SynchronousQueue<>(), // No queue: tasks will be rejected if no threads are available
+                new ThreadPoolExecutor.AbortPolicy() // Rejection policy: throw exception
+        );
         TaskCentralExceptionHandler taskCentralExceptionHandler = new TaskCentralExceptionHandler();
         executor.setThreadFactory(new CustomThreadFactory(taskCentralExceptionHandler));
     }

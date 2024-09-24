@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.scheduling.config.Task;
 import org.springframework.test.context.ActiveProfiles;
 import yp.externaltaskcontainer.application.exception.TaskResourcesNotEnough;
 import yp.externaltaskcontainer.model.ExternalTask;
