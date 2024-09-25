@@ -32,6 +32,23 @@ class TaskManagerTest {
     }
 
     @Test
+    void should_get_executed_task_number() {
+        // Given
+        ExternalTask randomTask = new ExternalTask();
+        randomTask.setCommand(new ArrayList<>() {{
+            add("bash");
+            add("-c");
+            add("sleep 10");
+        }});
+
+        for (int i = 0; i < maxThreadsNum; i++) {
+            taskManager.createNewTask(randomTask);
+        }
+
+        assertEquals(taskManager.getExecutionTaskNumber(), maxThreadsNum);
+    }
+
+    @Test
     void should_throw_exception_when_thread_number_exceeded() {
         // Given
         ExternalTask randomTask = new ExternalTask();
@@ -41,12 +58,12 @@ class TaskManagerTest {
             add("sleep 5");
         }});
 
-        for (int i = 0; i < maxThreadsNum; i++){
+        for (int i = 0; i < maxThreadsNum; i++) {
             taskManager.createNewTask(randomTask);
         }
 
         // When and then
-        assertThrows(TaskResourcesNotEnough.class,()->{
+        assertThrows(TaskResourcesNotEnough.class, () -> {
             taskManager.createNewTask(randomTask);
         });
     }

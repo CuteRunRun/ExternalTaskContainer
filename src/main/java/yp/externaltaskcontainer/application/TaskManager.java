@@ -19,6 +19,7 @@ public class TaskManager {
     @Value("${task.number}")
     private int maxThreadsNum;
     private ThreadPoolExecutor executor;
+
     @PostConstruct
     public void init() {
         executor = new ThreadPoolExecutor(
@@ -30,6 +31,10 @@ public class TaskManager {
         );
         TaskCentralExceptionHandler taskCentralExceptionHandler = new TaskCentralExceptionHandler();
         executor.setThreadFactory(new CustomThreadFactory(taskCentralExceptionHandler));
+    }
+
+    public int getExecutionTaskNumber() {
+        return executor.getActiveCount();
     }
 
     public void createNewTask(ExternalTask task) {
