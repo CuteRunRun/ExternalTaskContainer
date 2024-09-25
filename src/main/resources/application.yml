@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: ExternalTaskContainer
+task:
+  number: 5

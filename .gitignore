@@ -34,3 +34,6 @@ replay_pid*
 
 # ignore idea files
 .idea/*
+
+# ignore system file
+.DS_Store
