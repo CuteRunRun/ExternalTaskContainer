@@ -3,3 +3,4 @@ spring:
     name: ExternalTaskContainer-Test
 task:
   number: 5
+  waitTime: 1
